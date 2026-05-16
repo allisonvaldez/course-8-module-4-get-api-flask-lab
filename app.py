@@ -15,8 +15,7 @@ def home():
 """
 Implement GET /products route that returns all products or filters by category
 """
-
-@app.route("/products", methods= ["GET"])
+@app.route("/products", methods=["GET"])
 def get_products():
 
     # Return all products or filter by ?category=
@@ -25,15 +24,15 @@ def get_products():
     # Control flow
     if category:
         filtered = [p for p in products if p["category"].lower() == category.lower()]
-        return make_response(jsonify(products), 200)
-    
-    # If a filtered product is not found return empty list
-    return make_response(jsonify(filtered), 200)
+        return make_response(jsonify(filtered), 200)  
+
+    # No category given — return the full products list
+    return make_response(jsonify(products), 200)
 
 """
 Implement GET /products/<id> route that returns a specific product by ID or 404. For a unique identifier.
 """
-@app.route("/products/<int:id>", methods= ["GET"])
+@app.route("/products/<int:id>", methods=["GET"])
 def get_product_by_id(id):
 
     # Search for products and return the first one that matches
@@ -43,8 +42,9 @@ def get_product_by_id(id):
     if product:
         # Control flow if product found
         return make_response(jsonify(product), 200)
+
+    # Control flow if product not found
     return make_response(jsonify({"error": f"No product found with id {id}"}), 404)
 
-    
 if __name__ == "__main__":
     app.run(debug=True)
