@@ -25,7 +25,7 @@ def get_products():
     # Control flow
     if category:
         filtered = [p for p in products if p["category"].lower() == category.lower()]
-        return jsonify(filtered), 200
+        return jsonify(products), 200
     
     # If a filtered product is not found return empty list
     return jsonify(filtered), 200
@@ -43,7 +43,8 @@ def get_product_by_id(id):
     if product:
         # Control flow if product found
         return jsonify(product), 200
-    return jsonify({"error": f"No product found with id {id}"}), 404
+    return make_response(jsonify({"error": f"No product found with id {id}"}), 404)
+
     
 if __name__ == "__main__":
     app.run(debug=True)
